@@ -97,10 +97,6 @@ au  Filetype cpp set omnifunc=omni#cpp#complete#Main
 let g:clang_complete_auto = 0
 let g:clang_complete_copen = 1
 let g:clang_library_path='/usr/lib/libclang.so'
-"
-" python settings
-"
-au  Filetype python set makeprg="python %"
 
 " Unite
 let g:unite_source_rec_max_cache_files=0
