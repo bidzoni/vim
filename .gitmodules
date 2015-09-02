@@ -1,0 +1,66 @@
+[submodule "bundle/clang_complete"]
+	path = bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete
+[submodule "bundle/delimitMate"]
+	path = bundle/delimitMate
+	url = https://github.com/Raimondi/delimitMate
+[submodule "bundle/vim-gradle"]
+	path = bundle/vim-gradle
+	url = https://github.com/tfnico/vim-gradle
+[submodule "bundle/jedi-vim"]
+	path = bundle/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim
+[submodule "bundle/vim-latex"]
+	path = bundle/vim-latex
+	url = https://github.com/vim-latex/vim-latex
+[submodule "bundle/neocomplcache.vim"]
+	path = bundle/neocomplcache.vim
+	url = https://github.com/Shougo/neocomplcache.vim
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter
+[submodule "bundle/vim-nerdtree-tabs"]
+	path = bundle/vim-nerdtree-tabs
+	url = https://github.com/jistr/vim-nerdtree-tabs
+[submodule "bundle/smarthomekey.vim"]
+	path = bundle/smarthomekey.vim
+	url = https://github.com/chenkaie/smarthomekey.vim
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = https://github.com/ervandew/supertab
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = https://github.com/majutsushi/tagbar
+[submodule "bundle/unite.vim"]
+	path = bundle/unite.vim
+	url = https://github.com/Shougo/unite.vim
+[submodule "bundle/unite-outline"]
+	path = bundle/unite-outline
+	url = https://github.com/Shougo/unite-outline
+[submodule "bundle/vim-addon-mw-utils"]
+	path = bundle/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils
+[submodule "bundle/vim-airline"]
+	path = bundle/vim-airline
+	url = https://github.com/bling/vim-airline
+[submodule "bundle/vim-easymotion"]
+	path = bundle/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion
+[submodule "bundle/vim-expand-region"]
+	path = bundle/vim-expand-region
+	url = https://github.com/terryma/vim-expand-region
+[submodule "bundle/vim-makeshift"]
+	path = bundle/vim-makeshift
+	url = https://github.com/johnsyweb/vim-makeshift
+[submodule "bundle/vim-snipmate"]
+	path = bundle/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate
+[submodule "bundle/vim-surround"]
+	path = bundle/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "bundle/vim-tmux-navigator"]
+	path = bundle/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator
