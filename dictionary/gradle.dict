@@ -1,0 +1,13 @@
+android
+dependencies
+compile
+project
+def
+apply
+plugin
+group
+version
+name
+lintOptions
+abortOnError
+description
