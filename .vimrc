@@ -2,7 +2,7 @@ call pathogen#infect()
 
 au! BufWritePost *vimrc source ~/.vimrc
 
-let g:XkbSwitchEnabled = 1 
+let g:XkbSwitchEnabled = 0 
 let g:XkbSwitchIMappings = ['ru']
 
 "setting gui options
@@ -27,10 +27,14 @@ if version >= 700
     set undoreload=10000
 endif
 
+nnoremap <Space> <Nop>
+let mapleader = " "
+
 "256 color support
 set t_Co=256
 
 au ColorScheme * hi SpellBad NONE
+set clipboard=unnamed
 set shellslash
 set grepprg=grep\ -nH\ $*
 set nocompatible   " Disable vi-compatibility
@@ -38,6 +42,7 @@ set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
 set spelllang=ru,en
 set spell
+set relativenumber
 
 let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat='pdf'
@@ -47,9 +52,9 @@ filetype plugin on
 filetype indent on
 set ofu=syntaxcomplete#Complete
 
-let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_at_startup = 0
 let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_auto_select = 1
 let g:neocomplcache_enable_fuzzy_completion = 1
 
 let g:SuperTabDefaultCompletionType = "context"
@@ -64,10 +69,6 @@ let g:delimitMate_autoclose = 1
 " completion menu like IDE
 inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -82,13 +83,7 @@ let g:Powerline_symbols = "fancy"
 "
 " java settings
 "
-"au  Filetype java set omnifunc=javacomplete#Complete
-"au  Filetype java set completefunc=javacomplete#CompleteParamsInfo
-au BufNewFile,BufRead *.java setl omnifunc=javaapi#complete
-if has("balloon_eval") && has("balloon_multiline") 
-  au BufNewFile,BufRead *.java  setl bexpr=javaapi#balloon()
-  au BufNewFile,BufRead *.java  setl ballooneval
-endif
+au  Filetype java set omnifunc=javacomplete#Complete
 
 " cpp settings
 "
@@ -99,10 +94,18 @@ let g:clang_complete_copen = 1
 let g:clang_library_path='/usr/lib/libclang.so'
 
 " Unite
+"let g:unite_split_rule = 'botright'
 let g:unite_source_rec_max_cache_files=0
-nnoremap <C-n> :Unite -start-insert file file_rec<CR>
-nnoremap <C-b> :Unite buffer<CR>
+let g:unite_prompt='» '
+if executable('ack-grep')
+    let g:unite_source_grep_command='ack-grep'
+    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+endif
+
+nnoremap <C-n> :Unite -start-insert file/async file_rec/async<CR>
+nnoremap <C-b> :Unite -quick-match buffer<CR>
 nnoremap <C-p> :Unite -start-insert outline<CR>
+nnoremap <leader>/ :Unite -start-insert grep:<CR>
 nnoremap <leader>f :Unite -start-insert line<CR>
 
 " so, i change ctrlp with unite plugin... it's amazing))
@@ -136,6 +139,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 colorscheme desert
 set hls!
 set ignorecase
+set infercase
 set incsearch
 set sm!
 set nu!
@@ -151,9 +155,8 @@ set shellslash
 set showcmd
 set hidden
 set autoread
-"set completeopt=menuone,preview,longest
-set completeopt=longest,menuone,preview
-set tags=./tags;/
+"set completeopt=longest,menuone,preview
+set tags=./.tags;/
 
 nnoremap <F9> :<C-U>MakeshiftBuild<CR>
 set keymap=russian-jcukenwin
@@ -175,9 +178,6 @@ set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 iab utf! # -*- coding: utf-8 -*-
 
 
-nnoremap <Space> <Nop>
-let mapleader = " "
-
 nmap <F2> :nohlsearch<CR>
 nnoremap <M-j> mz:m+<CR>`z==
 nnoremap <M-k> mz:m-2<CR>`z==
@@ -194,7 +194,6 @@ imap <F1> <C-^>
 vmap <C-y> "=y
 map <F11> :call VimCommanderToggle()<CR>
 map <F12> :ConqueTerm bash<CR>
-map <silent> 0 :SmartHomeKey <CR>
 imap <silent> <Home> <C-O>:SmartHomeKey<CR> 
 map j gj
 map k gk
@@ -205,35 +204,41 @@ set nocompatible
 behave mswin
 set iskeyword=@,48-57,_,192-255
 
-set diffexpr=!MyDiff()
 
 " wrapping and line breaking
 set wrap
 set tw=0 
 set formatoptions-=t
 
-function MyDiff()
-    let opt = '-a --binary '
-    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-    if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-    let arg1 = v:fname_in
-    if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-    let arg2 = v:fname_new
-    if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-    let arg3 = v:fname_out
-    if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-    let eq = ''
-    if $VIMRUNTIME =~ ' '
-        if &sh =~ '\<cmd'
-            let cmd = '""' . $VIMRUNTIME . '\diff"'
-            let eq = '"'
-        else
-            let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-        endif
-    else
-        let cmd = $VIMRUNTIME . '\diff'
-    endif
-    silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+function Tags(lang)
+    let cmd="ctags-exuberant -R --language-force=" . a:lang . " -f.tags"
+    execute "!" . cmd
+    set tags=.tags
 endfunction
+
+"set diffexpr=!MyDiff()
+"function MyDiff()
+    "let opt = '-a --binary '
+    "if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+    "if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+    "let arg1 = v:fname_in
+    "if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+    "let arg2 = v:fname_new
+    "if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+    "let arg3 = v:fname_out
+    "if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+    "let eq = ''
+    "if $VIMRUNTIME =~ ' '
+        "if &sh =~ '\<cmd'
+            "let cmd = '""' . $VIMRUNTIME . '\diff"'
+            "let eq = '"'
+        "else
+            "let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+        "endif
+    "else
+        "let cmd = $VIMRUNTIME . '\diff'
+    "endif
+    "silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+"endfunction
 
 
