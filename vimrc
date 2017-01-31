@@ -1,118 +1,33 @@
 set nocompatible   " Disable vi-compatibility
 filetype off
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" PLUGIN MANAGER
 Plugin 'VundleVim/Vundle.vim' 
-
-" AUTO-PAIRS
 Plugin 'jiangmiao/auto-pairs'
-let g:AutoPairsFlyMode = 1 " work on the fly
-let g:AutoPairsShortcutBackInsert = '<M-b>' " back insert
-
-" AUTOCOMPLETE: neocomplete
 Plugin 'shougo/neocomplete.vim'
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#enable_auto_select = 1
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd Filetype java set omnifunc=javacomplete#Complete
-autocmd Filetype cpp set omnifunc=omni#cpp#complete#Main
-autocmd filetype groovy set makeprg="grandle build"
-autocmd filetype groovy set dictionary= "~/.vim/dictionary/gradle.dict"
-
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" NERD-COMMENTER
 Plugin 'scrooloose/nerdcommenter'
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-
-" NERD-TREE
 Plugin 'scrooloose/nerdtree'
-nmap <F3> :NERDTreeToggle<CR> 
-
-" SMART HOME KEY
 Plugin 'chenkaie/smarthomekey.vim'
-imap <silent> <Home> <C-O>:SmartHomeKey<CR> 
-
-" UNITE
 Plugin 'shougo/unite.vim'
 Plugin 'shougo/unite-outline'
-
-let g:unite_source_rec_max_cache_files=0
-let g:unite_prompt='» '
-if executable('ack-grep')
-    let g:unite_source_grep_command='ack-grep'
-    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-endif
-
-nnoremap <C-n> :Unite -start-insert file/async file_rec/async<CR>
-nnoremap <C-b> :Unite -quick-match buffer<CR>
-nnoremap <C-p> :Unite -start-insert outline<CR>
-nnoremap <leader>/ :Unite -start-insert grep:<CR>
-nnoremap <leader>f :Unite -start-insert line<CR>
-
-" AIR LINE
 Plugin 'bling/vim-airline'
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-let g:airline_powerline_fonts = 1
-let g:Powerline_symbols = "fancy"
-
-" EASY MOTION
 Plugin 'easymotion/vim-easymotion'
-
-" EXPAND REGION
 Plugin 'terryma/vim-expand-region'
-map <C-=> <Plug>(expand_region_expand)
-map <C--> <Plug>(expand_region_shrink)
-
-" VIM REPEATE
 Plugin 'tpope/vim-repeat'
-
-" VIM SURROUND
 Plugin 'tpope/vim-surround'
-
-" VIM SNIPPETS
 Plugin 'marcweber/vim-addon-mw-utils'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
-
-imap <C-j> <Plug>snipMateTrigger
-
-" MATCHER (for xml,html,etc)
 Plugin 'matchit.zip'
-
-" XKB SWITCH
 Plugin 'lyokha/vim-xkbswitch'
-let g:XkbSwitchEnabled = 0 
-let g:XkbSwitchIMappings = ['ru']
+Plugin 'shougo/vimproc.vim'
+Plugin 'shougo/vimshell.vim'
+Plugin 'mileszs/ack.vim'
 
+call vundle#end()            
+filetype plugin indent on   
 
 " COMMON VIM SETTINGS
 
@@ -232,3 +147,91 @@ function Tags(lang)
     execute "!" . cmd
     set tags=.tags
 endfunction
+
+
+" PLUGINS
+
+
+" AUTO-PAIRS
+let g:AutoPairsFlyMode = 1 " work on the fly
+let g:AutoPairsShortcutBackInsert = '<M-b>' " back insert
+
+" AUTOCOMPLETE: neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#enable_auto_select = 1
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd Filetype java set omnifunc=javacomplete#Complete
+autocmd Filetype cpp set omnifunc=omni#cpp#complete#Main
+autocmd filetype groovy set makeprg="grandle build"
+autocmd filetype groovy set dictionary= "~/.vim/dictionary/gradle.dict"
+
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" NERD-COMMENTER
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+
+" NERD-TREE
+nmap <F3> :NERDTreeToggle<CR> 
+
+" SMART HOME KEY
+imap <silent> <Home> <C-O>:SmartHomeKey<CR> 
+
+" FUZZY FINDER: UNITE
+let g:unite_source_rec_max_cache_files=0
+let g:unite_prompt='» '
+if executable('ack-grep')
+    let g:unite_source_grep_command='ack-grep'
+    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+endif
+
+nnoremap <Leader>c :Unite -start-insert file/async file_rec/async<CR>
+nnoremap <Leader>b :Unite -quick-match buffer<CR>
+nnoremap <Leader>m :Unite -start-insert outline<CR>
+nnoremap <Leader>/ :Unite -start-insert grep:<CR>
+nnoremap <Leader>f :Unite -start-insert line<CR>
+
+" AIR LINE
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline_powerline_fonts = 1
+let g:Powerline_symbols = "fancy"
+
+" EXPAND REGION
+map <C-=> <Plug>(expand_region_expand)
+map <C--> <Plug>(expand_region_shrink)
+
+" VIM SNIPPETS
+imap <C-j> <Plug>snipMateTrigger
+
+" XKB SWITCH
+let g:XkbSwitchEnabled = 0 
+let g:XkbSwitchIMappings = ['ru']
+
+" ACK.VIM
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
