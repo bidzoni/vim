@@ -4,6 +4,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle.vim
 call vundle#begin()
 
+Plugin 'javacomplete'
 Plugin 'VundleVim/Vundle.vim' 
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'shougo/neocomplete.vim'
