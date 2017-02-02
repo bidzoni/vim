@@ -25,6 +25,7 @@ Plugin 'lyokha/vim-xkbswitch'
 Plugin 'shougo/vimproc.vim'
 Plugin 'shougo/vimshell.vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'diepm/vim-rest-console'
 
 call vundle#end()            
 filetype plugin indent on   
