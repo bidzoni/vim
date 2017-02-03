@@ -204,7 +204,7 @@ if executable('ack-grep')
 endif
 
 nnoremap <Leader>c :Unite -start-insert file/async file_rec/async<CR>
-nnoremap <Leader>b :Unite -quick-match buffer<CR>
+nnoremap <Leader>b :Unite -start-insert buffer<CR>
 nnoremap <Leader>m :Unite -start-insert outline<CR>
 nnoremap <Leader>/ :Unite -start-insert grep:<CR>
 nnoremap <Leader>f :Unite -start-insert line<CR>
