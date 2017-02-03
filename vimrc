@@ -143,6 +143,8 @@ map <F11> :call VimCommanderToggle()<CR>
 map <F12> :ConqueTerm bash<CR>
 map j gj
 map k gk
+nmap gbn :bn<cr>
+nmap gbp :bp<cr>
 
 behave mswin
 function Tags(lang)
