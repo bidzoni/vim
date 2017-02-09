@@ -24,7 +24,6 @@ Plugin 'marcweber/vim-addon-mw-utils'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'matchit.zip'
-Plugin 'lyokha/vim-xkbswitch'
 Plugin 'shougo/vimproc.vim'
 Plugin 'shougo/vimshell.vim'
 Plugin 'mileszs/ack.vim'
@@ -233,10 +232,6 @@ map <C--> <Plug>(expand_region_shrink)
 
 " VIM SNIPPETS
 imap <C-j> <Plug>snipMateTrigger
-
-" XKB SWITCH
-let g:XkbSwitchEnabled = 0 
-let g:XkbSwitchIMappings = ['ru']
 
 " ACK.VIM
 if executable('ag')
