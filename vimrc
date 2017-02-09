@@ -4,7 +4,8 @@ filetype off
 set rtp+=~/.vim/bundle/vundle.vim
 call vundle#begin()
 
-" Plugin 'bash-support.vim'
+Plugin 'bash-support.vim'
+Plugin 'tomtom/tlib_vim'
 Plugin 'javacomplete'
 Plugin 'VundleVim/Vundle.vim' 
 Plugin 'jiangmiao/auto-pairs'
@@ -99,6 +100,9 @@ set iskeyword=@,48-57,_,192-255
 set wrap
 set tw=0 
 set formatoptions-=t
+set wildmenu
+set wildmode=list:longest
+set wildignorecase
 
 
 highlight lCursor guifg=NONE guibg=Cyan
@@ -130,14 +134,13 @@ let g:Tex_DefaultTargetFormat='pdf'
 
 
 nmap <F2> :nohlsearch<CR>
-nnoremap <M-j> mz:m+<CR>`z==
-nnoremap <M-k> mz:m-2<CR>`z==
-inoremap <M-j> <Esc>:m+<CR>==gi
-inoremap <M-k> <Esc>:m-2<CR>==gi
-vnoremap <M-j> :m'>+<CR>gv=`<my`>mzgv`yo`z
-vnoremap <M-k> :m'<-2<CR>gv=`>my`<mzgv`yo`z
 
-imap <F1> <C-^>
+inoremap <F1> <C-^>
+inoremap <M-l> <Left>
+inoremap <M-h> <Right>
+inoremap <M-k> <Down>
+inoremap <M-j> <Up>
+
 vmap <C-y> "=y
 map <F11> :call VimCommanderToggle()<CR>
 map <F12> :ConqueTerm bash<CR>
@@ -145,6 +148,7 @@ map j gj
 map k gk
 nmap gbn :bn<cr>
 nmap gbp :bp<cr>
+nmap <leader>k :bd<cr>
 
 behave mswin
 function Tags(lang)
@@ -210,7 +214,7 @@ nnoremap <Leader>c :Unite -start-insert file/async file_rec/async<CR>
 nnoremap <Leader>b :Unite -start-insert buffer<CR>
 nnoremap <Leader>m :Unite -start-insert outline<CR>
 nnoremap <Leader>/ :Unite -start-insert grep:<CR>
-nnoremap <Leader>f :Unite -start-insert line<CR>
+nnoremap <Leader>l :Unite -start-insert line<CR>
 
 " AIR LINE
 if !exists('g:airline_symbols')
@@ -240,3 +244,5 @@ if executable('ag')
 endif
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
+
+nnoremap <Leader>f :e 
