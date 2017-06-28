@@ -6,10 +6,10 @@ call vundle#begin()
 
 Plugin 'bash-support.vim'
 Plugin 'tomtom/tlib_vim'
-Plugin 'javacomplete'
+Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'VundleVim/Vundle.vim' 
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'shougo/neocomplete.vim'
+Plugin 'shougo/neopairs.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'chenkaie/smarthomekey.vim'
@@ -135,10 +135,10 @@ let g:Tex_DefaultTargetFormat='pdf'
 nmap <F2> :nohlsearch<CR>
 
 inoremap <F1> <C-^>
-inoremap <M-l> <Left>
-inoremap <M-h> <Right>
-inoremap <M-k> <Down>
-inoremap <M-j> <Up>
+inoremap <M-l> <Right>
+inoremap <M-h> <Left>
+inoremap <M-k> <Up>
+inoremap <M-j> <Down>
 
 vmap <C-y> "=y
 map <F11> :call VimCommanderToggle()<CR>
