@@ -4,30 +4,30 @@ filetype off
 set rtp+=~/.vim/bundle/vundle.vim
 call vundle#begin()
 
-Plugin 'bash-support.vim'
-Plugin 'tomtom/tlib_vim'
-Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'VundleVim/Vundle.vim' 
-Plugin 'shougo/neocomplete.vim'
-Plugin 'shougo/neopairs.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'chenkaie/smarthomekey.vim'
-Plugin 'shougo/unite.vim'
-Plugin 'shougo/unite-outline'
+Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'bash-support.vim'
 Plugin 'bling/vim-airline'
+Plugin 'chenkaie/smarthomekey.vim'
+Plugin 'diepm/vim-rest-console'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'terryma/vim-expand-region'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'marcweber/vim-addon-mw-utils'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
+Plugin 'marcweber/vim-addon-mw-utils'
 Plugin 'matchit.zip'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'shougo/neocomplete.vim'
+Plugin 'shougo/neopairs.vim'
+Plugin 'shougo/unite-outline'
+Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'shougo/vimshell.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'diepm/vim-rest-console'
+Plugin 'terryma/vim-expand-region'
+Plugin 'tomtom/tlib_vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -47,6 +47,7 @@ if has('gui_running')
     else
         set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
     endif
+    highlight Pmenu ctermbg=238 gui=bold
 endif
 
 if version >= 700
@@ -56,6 +57,7 @@ if version >= 700
     set undofile
     set undolevels=1000
     set undoreload=10000
+    highlight Pmenu guibg=brown gui=bold
 endif
 
 nnoremap <Space> <Nop>
@@ -159,16 +161,14 @@ endfunction
 
 " PLUGINS
 
-
-" AUTO-PAIRS
-let g:AutoPairsFlyMode = 1 " work on the fly
-let g:AutoPairsShortcutBackInsert = '<M-b>' " back insert
-
 " AUTOCOMPLETE: neocomplete
+let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_auto_select = 0
+
+
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
@@ -179,6 +179,7 @@ autocmd Filetype cpp set omnifunc=omni#cpp#complete#Main
 autocmd filetype groovy set makeprg="grandle build"
 autocmd filetype groovy set dictionary= "~/.vim/dictionary/gradle.dict"
 
+inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
   return pumvisible() ? "\<C-y>" : "\<CR>"
@@ -189,7 +190,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+inoremap <expr><Space> pumvisible() ? "\<C-y>\<Space>" : "\<Space>"
 
 " NERD-COMMENTER
 let g:NERDSpaceDelims = 1
@@ -214,6 +215,7 @@ nnoremap <Leader>b :Unite -start-insert buffer<CR>
 nnoremap <Leader>m :Unite -start-insert outline<CR>
 nnoremap <Leader>/ :Unite -start-insert grep:<CR>
 nnoremap <Leader>l :Unite -start-insert line<CR>
+nnoremap <Leader>f :Unite -start-insert file<CR>
 
 " AIR LINE
 if !exists('g:airline_symbols')
@@ -240,4 +242,6 @@ endif
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 
-nnoremap <Leader>f :e 
+" SUPERTAB
+let g:SuperTabDefaultCompletionType = "context"
+
