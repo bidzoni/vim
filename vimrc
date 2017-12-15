@@ -1,11 +1,10 @@
 set nocompatible   " Disable vi-compatibility
 filetype off
 
-set rtp+=~/.vim/bundle/vundle.vim
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim' 
-Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'bash-support.vim'
 Plugin 'bling/vim-airline'
 Plugin 'chenkaie/smarthomekey.vim'
@@ -20,14 +19,20 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'shougo/neocomplete.vim'
 Plugin 'shougo/neopairs.vim'
-Plugin 'shougo/unite-outline'
-Plugin 'shougo/unite.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+" Plugin 'shougo/unite-outline'
+" Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'shougo/vimshell.vim'
 Plugin 'terryma/vim-expand-region'
 Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tfnico/vim-gradle'
+Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'falstro/ghost-text-vim'
+Plugin 'davidhalter/jedi-vim'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -36,9 +41,17 @@ filetype plugin indent on
 
 au! BufWritePost *vimrc source ~/.vimrc
 
+if has('python') " if dynamic py|py3, this line already activates python2.
+    let s:python_version = 2
+elseif has('python3')
+    let s:python_version = 3
+else
+    let s:python_version = 0
+endif
+
 "setting gui options
 if has('gui_running')
-	set guioptions=aegrLtm
+	set guioptions=aegrLt
 	set lines=47 columns=105
     set guioptions-=e
     set guioptions-=m
@@ -104,6 +117,7 @@ set formatoptions-=t
 set wildmenu
 set wildmode=list:longest
 set wildignorecase
+syntax on
 
 
 highlight lCursor guifg=NONE guibg=Cyan
@@ -150,6 +164,9 @@ map k gk
 nmap gbn :bn<cr>
 nmap gbp :bp<cr>
 nmap <leader>k :bd<cr>
+nmap <leader>r :b#<cr>
+nnoremap <C-tab> :bn<cr>
+nnoremap <C-S-tab> :bn<cr>
 
 behave mswin
 function Tags(lang)
@@ -172,9 +189,9 @@ let g:neocomplete#enable_auto_select = 0
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd Filetype java set omnifunc=javacomplete#Complete
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype cpp set omnifunc=omni#cpp#complete#Main
 autocmd filetype groovy set makeprg="grandle build"
 autocmd filetype groovy set dictionary= "~/.vim/dictionary/gradle.dict"
@@ -203,19 +220,26 @@ nmap <F3> :NERDTreeToggle<CR>
 imap <silent> <Home> <C-O>:SmartHomeKey<CR> 
 
 " FUZZY FINDER: UNITE
-let g:unite_source_rec_max_cache_files=0
-let g:unite_prompt='» '
-if executable('ack-grep')
-    let g:unite_source_grep_command='ack-grep'
-    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-endif
+" let g:unite_source_rec_max_cache_files=0
+" let g:unite_prompt='» '
+" if executable('ag')
+    " let g:unite_source_grep_command='ag'
+    " let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+" endif
 
-nnoremap <Leader>c :Unite -start-insert file/async file_rec/async<CR>
-nnoremap <Leader>b :Unite -start-insert buffer<CR>
-nnoremap <Leader>m :Unite -start-insert outline<CR>
-nnoremap <Leader>/ :Unite -start-insert grep:<CR>
-nnoremap <Leader>l :Unite -start-insert line<CR>
-nnoremap <Leader>f :Unite -start-insert file<CR>
+" nnoremap <Leader>c :Unite -start-insert file_rec/async<CR>
+" nnoremap <Leader>b :Unite -start-insert buffer<CR>
+" nnoremap <Leader>m :Unite -start-insert outline<CR>
+" nnoremap <Leader>/ :Unite -start-insert grep:<CR>
+" nnoremap <Leader>l :Unite -start-insert line<CR>
+" nnoremap <Leader>f :Unite -start-insert file<CR>
+
+" FUZZY FINDER: FZF
+nnoremap <Leader>c :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>m :Tags<CR>
+nnoremap <Leader>l :Lines<CR>
+nnoremap <Leader>f :e 
 
 " AIR LINE
 if !exists('g:airline_symbols')
@@ -240,7 +264,7 @@ if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>/ :Ack!<Space>
 
 " SUPERTAB
 let g:SuperTabDefaultCompletionType = "context"
