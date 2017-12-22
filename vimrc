@@ -6,7 +6,7 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim' 
 Plugin 'bash-support.vim'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'chenkaie/smarthomekey.vim'
 Plugin 'diepm/vim-rest-console'
 Plugin 'easymotion/vim-easymotion'
@@ -18,11 +18,10 @@ Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'shougo/neocomplete.vim'
-Plugin 'shougo/neopairs.vim'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-" Plugin 'shougo/unite-outline'
-" Plugin 'shougo/unite.vim'
+Plugin 'ervandew/supertab'
 Plugin 'shougo/vimproc.vim'
 Plugin 'shougo/vimshell.vim'
 Plugin 'terryma/vim-expand-region'
@@ -81,7 +80,9 @@ set t_Co=256
 
 autocmd ColorScheme * hi SpellBad NONE
 colorscheme desert
-set ai!
+set autoindent
+set smartindent
+set cindent
 set autoread
 set clipboard=unnamed
 set cursorline
@@ -142,19 +143,14 @@ let g:Tex_DefaultTargetFormat='pdf'
 "inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
 "inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
 
- " Clang Complete Settings
-"let g:clang_complete_auto = 0
-"let g:clang_complete_copen = 1
-"let g:clang_library_path='/usr/lib/libclang.so'
-
-
 nmap <F2> :nohlsearch<CR>
 
+" meta key fixing
 inoremap <F1> <C-^>
-inoremap <M-l> <Right>
-inoremap <M-h> <Left>
-inoremap <M-k> <Up>
-inoremap <M-j> <Down>
+inoremap <m-l> <Right>
+inoremap <m-h> <Left>
+inoremap <m-k> <Up>
+inoremap <m-j> <Down>
 
 vmap <C-y> "=y
 map <F11> :call VimCommanderToggle()<CR>
@@ -169,12 +165,11 @@ nnoremap <C-tab> :bn<cr>
 nnoremap <C-S-tab> :bn<cr>
 
 behave mswin
-function Tags(lang)
+function! Tags(lang)
     let cmd="ctags-exuberant -R --language-force=" . a:lang . " -f.tags"
     execute "!" . cmd
     set tags=.tags
 endfunction
-
 
 " PLUGINS
 
@@ -184,7 +179,21 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#enable_auto_select = 0
+" undo completion
+inoremap <expr><C-g>     neocomplete#undo_completion()
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+inoremap <expr><Space> pumvisible() ? "\<C-y>\<Space>" : "\<Space>"
 
+
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -195,19 +204,6 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype cpp set omnifunc=omni#cpp#complete#Main
 autocmd filetype groovy set makeprg="grandle build"
 autocmd filetype groovy set dictionary= "~/.vim/dictionary/gradle.dict"
-
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? "\<C-y>\<Space>" : "\<Space>"
 
 " NERD-COMMENTER
 let g:NERDSpaceDelims = 1
@@ -237,7 +233,7 @@ imap <silent> <Home> <C-O>:SmartHomeKey<CR>
 " FUZZY FINDER: FZF
 nnoremap <Leader>c :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>m :Tags<CR>
+nnoremap <Leader>m :BTags<CR>
 nnoremap <Leader>l :Lines<CR>
 nnoremap <Leader>f :e 
 
@@ -245,9 +241,9 @@ nnoremap <Leader>f :e
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_symbols.space = "\ua0"
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline_symbols.space = "\ua0"
+" let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = "fancy"
@@ -269,3 +265,7 @@ nnoremap <Leader>/ :Ack!<Space>
 " SUPERTAB
 let g:SuperTabDefaultCompletionType = "context"
 
+" AUTOPAIR
+let g:AutoPairsShortcutJump = "<C-Enter>"
+map <ESC> <ESC><ESC>
+set nocompatible   " Disable vi-compatibility
