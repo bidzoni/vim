@@ -32,6 +32,7 @@ Plugin 'tfnico/vim-gradle'
 Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'falstro/ghost-text-vim'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()            
 filetype plugin indent on   
