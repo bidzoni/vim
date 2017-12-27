@@ -41,14 +41,6 @@ filetype plugin indent on
 
 au! BufWritePost *vimrc source ~/.vimrc
 
-if has('python') " if dynamic py|py3, this line already activates python2.
-    let s:python_version = 2
-elseif has('python3')
-    let s:python_version = 3
-else
-    let s:python_version = 0
-endif
-
 "setting gui options
 if has('gui_running')
 	set guioptions=aegrLt
