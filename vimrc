@@ -260,5 +260,4 @@ let g:SuperTabDefaultCompletionType = "context"
 
 " AUTOPAIR
 let g:AutoPairsShortcutJump = "<C-Enter>"
-map <ESC> <ESC><ESC>
 set nocompatible   " Disable vi-compatibility
