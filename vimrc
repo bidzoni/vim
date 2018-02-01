@@ -33,6 +33,10 @@ Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'falstro/ghost-text-vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/L9'
+Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'scrooloose/syntastic'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -228,7 +232,7 @@ nnoremap <Leader>c :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>m :BTags<CR>
 nnoremap <Leader>l :Lines<CR>
-nnoremap <Leader>f :e 
+nnoremap <Leader>f :FufFile<CR>
 
 " AIR LINE
 if !exists('g:airline_symbols')
