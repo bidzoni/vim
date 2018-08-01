@@ -7,7 +7,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' 
 Plugin 'bash-support.vim'
 Plugin 'vim-airline/vim-airline'
-Plugin 'chenkaie/smarthomekey.vim'
 Plugin 'diepm/vim-rest-console'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'garbas/vim-snipmate'
@@ -37,6 +36,9 @@ Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/syntastic'
+Plugin 'plasticboy/vim-markdown'
+" Color scheme
+Plugin 'blueshirts/darcula'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -47,16 +49,20 @@ au! BufWritePost *vimrc source ~/.vimrc
 
 "setting gui options
 if has('gui_running')
-	set guioptions=aegrLt
-	set lines=47 columns=105
-    set guioptions-=e
-    set guioptions-=m
+	" set lines=47 columns=105
+    " set guioptions=aegrLt
+    " set guioptions-=e
+    " set guioptions-=m
+    set guioptions=
     if has ("win32")
         set guifont=Consolas:h9
     else
         set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
     endif
     highlight Pmenu ctermbg=238 gui=bold
+    colorscheme darcula
+else
+    colorscheme slate
 endif
 
 if version >= 700
@@ -76,7 +82,6 @@ let mapleader = " "
 set t_Co=256
 
 autocmd ColorScheme * hi SpellBad NONE
-colorscheme desert
 set autoindent
 set smartindent
 set cindent
@@ -104,7 +109,7 @@ set smarttab
 set spell
 set spelllang=ru,en
 set tabstop=4
-set tags=./.tags;/
+set tags=~/.vim/tags/*;./.tags;/
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
@@ -144,6 +149,9 @@ nmap <F2> :nohlsearch<CR>
 
 " meta key fixing
 inoremap <F1> <C-^>
+inoremap <c-space> <C-^>
+inoremap <c-\> <C-^>
+noremap <c-g> <Esc>
 inoremap <m-l> <Right>
 inoremap <m-h> <Left>
 inoremap <m-k> <Up>
@@ -209,9 +217,6 @@ let g:NERDCompactSexyComs = 1
 " NERD-TREE
 nmap <F3> :NERDTreeToggle<CR> 
 
-" SMART HOME KEY
-imap <silent> <Home> <C-O>:SmartHomeKey<CR> 
-
 " FUZZY FINDER: UNITE
 " let g:unite_source_rec_max_cache_files=0
 " let g:unite_prompt='» '
@@ -265,3 +270,7 @@ let g:SuperTabDefaultCompletionType = "context"
 " AUTOPAIR
 let g:AutoPairsShortcutJump = "<C-Enter>"
 set nocompatible   " Disable vi-compatibility
+
+" FUGITIVE
+nnoremap <C-~> :Gstatus<CR>
+nnoremap <Leader>~ :Gstatus<CR>
