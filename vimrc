@@ -35,8 +35,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'scrooloose/syntastic'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'SQLComplete.vim'
 " Color scheme
 Plugin 'blueshirts/darcula'
 
