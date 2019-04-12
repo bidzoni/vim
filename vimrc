@@ -28,7 +28,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tfnico/vim-gradle'
-Plugin 'artur-shaik/vim-javacomplete2'
+" Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'falstro/ghost-text-vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-fugitive'
@@ -37,6 +37,7 @@ Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'SQLComplete.vim'
+Plugin 'thinca/vim-logcat'
 " Color scheme
 Plugin 'blueshirts/darcula'
 
@@ -118,7 +119,7 @@ set wrap
 set tw=0 
 set formatoptions-=t
 set wildmenu
-set wildmode=list:longest
+set wildmode=longest,list,full
 set wildignorecase
 syntax on
 
@@ -207,7 +208,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype cpp set omnifunc=omni#cpp#complete#Main
-autocmd filetype groovy set makeprg="grandle build"
 autocmd filetype groovy set dictionary= "~/.vim/dictionary/gradle.dict"
 
 " NERD-COMMENTER
@@ -233,7 +233,7 @@ nmap <F3> :NERDTreeToggle<CR>
 " nnoremap <Leader>f :Unite -start-insert file<CR>
 
 " FUZZY FINDER: FZF
-nnoremap <Leader>c :Files<CR>
+nnoremap <Leader>c :GitFiles<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>m :BTags<CR>
 nnoremap <Leader>l :Lines<CR>
@@ -272,5 +272,5 @@ let g:AutoPairsShortcutJump = "<C-Enter>"
 set nocompatible   " Disable vi-compatibility
 
 " FUGITIVE
-nnoremap <C-~> :Gstatus<CR>
-nnoremap <Leader>~ :Gstatus<CR>
+nnoremap <C-`> :Gstatus<CR>
+nnoremap <Leader>` :Gstatus<CR>
