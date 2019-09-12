@@ -51,15 +51,15 @@ au! BufWritePost *vimrc source ~/.vimrc
 "setting gui options
 if has('gui_running')
 	" set lines=47 columns=105
-    " set guioptions=aegrLt
-    " set guioptions-=e
-    " set guioptions-=m
+    set guioptions=aegrLt
+    set guioptions-=e
+    set guioptions-=m
     set guioptions=
-    if has ("win32")
-        set guifont=Consolas:h9
-    else
-        set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
-    endif
+    " if has ("win32")
+    "     set guifont=Consolas:h9
+    " else
+    "     set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
+    " endif
     highlight Pmenu ctermbg=238 gui=bold
     colorscheme darcula
 else
