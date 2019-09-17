@@ -7,10 +7,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' 
 Plugin 'bash-support.vim'
 Plugin 'vim-airline/vim-airline'
-Plugin 'diepm/vim-rest-console'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
 Plugin 'marcweber/vim-addon-mw-utils'
 Plugin 'matchit.zip'
 Plugin 'mileszs/ack.vim'
@@ -28,7 +25,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tfnico/vim-gradle'
-" Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'tpope/vim-rsi'
 Plugin 'falstro/ghost-text-vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-fugitive'
@@ -75,6 +72,11 @@ if version >= 700
     set undoreload=10000
     highlight Pmenu guibg=brown gui=bold
 endif
+
+if has('termguicolors')
+    colorscheme darcula
+    set termguicolors
+end
 
 nnoremap <Space> <Nop>
 let mapleader = " "
