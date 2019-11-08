@@ -35,6 +35,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'SQLComplete.vim'
 Plugin 'thinca/vim-logcat'
+Plugin 'chrisbra/csv.vim'
 " Color scheme
 Plugin 'blueshirts/darcula'
 
@@ -73,10 +74,10 @@ if version >= 700
     highlight Pmenu guibg=brown gui=bold
 endif
 
-if has('termguicolors')
-    colorscheme darcula
-    set termguicolors
-end
+" if has('termguicolors')
+"     set termguicolors
+"     colorscheme darcula
+" end
 
 nnoremap <Space> <Nop>
 let mapleader = " "
