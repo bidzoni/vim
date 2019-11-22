@@ -13,7 +13,8 @@ Plugin 'matchit.zip'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'scrooloose/nerdtree'
-Plugin 'shougo/neocomplete.vim'
+" Plugin 'shougo/neocomplete.vim'
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -153,7 +154,6 @@ nmap <F2> :nohlsearch<CR>
 
 " meta key fixing
 inoremap <F1> <C-^>
-inoremap <c-space> <C-^>
 inoremap <c-\> <C-^>
 noremap <c-g> <Esc>
 inoremap <m-l> <Right>
@@ -182,7 +182,30 @@ endfunction
 
 " PLUGINS
 
-" AUTOCOMPLETE: neocomplete
+" AUTOCOMPLETE: 
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" Close popup by <Space>.
+inoremap <expr><Space> pumvisible() ? "\<C-y>\<Space>" : "\<Space>"
+
+" COC
+inoremap <silent><expr> <c-space> coc#refresh()
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" NEOCOMPLETE
 let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
@@ -190,13 +213,9 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#enable_auto_select = 0
 " undo completion
 inoremap <expr><C-g>     neocomplete#undo_completion()
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? "\<C-y>\<Space>" : "\<Space>"
 
 
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
